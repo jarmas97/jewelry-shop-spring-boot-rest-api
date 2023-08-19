@@ -1,7 +1,6 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.entities.user;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
