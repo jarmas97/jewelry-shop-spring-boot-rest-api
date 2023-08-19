@@ -1,21 +1,23 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 class ApplicationTests {
 
 	@Autowired
-	ApplicationContext applicationContext;
+	Controller controller;
 
 	@Test
-	void contextLoads() {
-		assertNotNull(applicationContext, "Application context was not loaded");
+	public void contextLoads() {
+		assertNotNull(controller);
 	}
 
 }
