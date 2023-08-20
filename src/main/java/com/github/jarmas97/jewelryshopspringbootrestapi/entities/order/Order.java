@@ -1,7 +1,7 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.entities.order;
 
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.product.Product;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
