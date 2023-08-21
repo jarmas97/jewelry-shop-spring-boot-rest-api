@@ -1,7 +1,6 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.entities.product;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
