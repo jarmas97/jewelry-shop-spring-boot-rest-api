@@ -3,7 +3,7 @@
 ## Description
 This application serves as a Rest API for a jewelry store.
 
-## Used components
+## Components
 - Java 8
 - Maven
 - Spring Boot
