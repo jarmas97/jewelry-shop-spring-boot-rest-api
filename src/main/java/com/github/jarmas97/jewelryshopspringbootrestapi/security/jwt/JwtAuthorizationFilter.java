@@ -25,7 +25,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException
     {
 
-        if (request.getRequestURI().startsWith("/products")) {
+        if (!request.getRequestURI().startsWith("/admin")) {
             filterChain.doFilter(request, response);
             return;
         }
