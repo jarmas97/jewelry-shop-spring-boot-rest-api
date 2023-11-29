@@ -26,7 +26,6 @@ providing essential functionality through a REST API.
 - JUnit
 
 ## Project Structure
-## Project Structure
 - **src**: Main source directory.
     - **main**:
         - **java**: Java source code.
