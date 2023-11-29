@@ -1,92 +1,43 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.entities.product;
 
+import com.github.jarmas97.jewelryshopspringbootrestapi.entities.material.Material;
+import com.github.jarmas97.jewelryshopspringbootrestapi.entities.photo.Photo;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@Data
 @Entity
-@Table(name = "products")
+@Table(name = "PRODUCTS")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @Lob
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @ElementCollection(targetClass = Material.class)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "product_materials",
-            joinColumns = @JoinColumn(name = "product_id"))
+    @ManyToMany
+    @JoinTable(
+            name = "product_material",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "material_id"))
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Material> materials;
     private BigDecimal price;
-
-    public Product() {
-    }
-    public Product(String name, String description, Category category, List<Material> materials, BigDecimal price) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.materials = materials;
-        this.price = price;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<Material> getMaterials() {
-        return materials;
-    }
-
-    public void setMaterials(List<Material> materials) {
-        this.materials = materials;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id && Objects.equals(name, product.name) && Objects.equals(description, product.description) && category == product.category && Objects.equals(materials, product.materials) && Objects.equals(price, product.price);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, category, materials, price);
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_photo_id")
+    private Photo profilePhoto;
+    @ElementCollection
+    @CollectionTable(name = "product_photos", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "photo")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Photo> photos = new ArrayList<>();
 }

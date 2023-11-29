@@ -1,19 +1,16 @@
-package com.github.jarmas97.jewelryshopspringbootrestapi.entities.user;
+package com.github.jarmas97.jewelryshopspringbootrestapi.entities.material;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-
 import javax.persistence.*;
 @Data
 @Entity
-@Table(name = "USERS")
-public class User {
+@Table(name = "MATERIALS")
+public class Material {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
-    private String role;
+    private String name;
 }

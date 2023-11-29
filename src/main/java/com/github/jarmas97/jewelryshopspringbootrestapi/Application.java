@@ -1,7 +1,6 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi;
 
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.product.Category;
-import com.github.jarmas97.jewelryshopspringbootrestapi.entities.product.Material;
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.product.Product;
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +17,8 @@ public class Application {
 
 	@Autowired
 	private ProductRepository productRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-	}
-
-	@Bean
-	CommandLineRunner runner() {
-		return args -> {
-			Product product1 = new Product(
-					"gold ring with diamonds",
-					"description...something",
-					Category.RING,
-					Arrays.asList(Material.GOLD, Material.DIAMOND),
-					BigDecimal.valueOf(240)
-			);
-			productRepository.save(product1);
-		};
 	}
 
 }

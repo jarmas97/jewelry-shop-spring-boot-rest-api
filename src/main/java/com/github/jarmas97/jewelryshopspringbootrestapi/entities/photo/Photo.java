@@ -1,19 +1,18 @@
-package com.github.jarmas97.jewelryshopspringbootrestapi.entities.user;
+package com.github.jarmas97.jewelryshopspringbootrestapi.entities.photo;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-
 import javax.persistence.*;
 @Data
+@Table(name = "PHOTOS")
 @Entity
-@Table(name = "USERS")
-public class User {
+public class Photo {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
-    private String role;
+    @Lob
+    @Column(name = "photo", length = 1_572_864)
+    private String photo;
 }
