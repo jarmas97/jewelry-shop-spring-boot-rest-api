@@ -22,7 +22,6 @@ public class PublicController {
 
     @GetMapping(value = "/products")
     public Iterable<Product> getAllProducts() {
-        System.out.println("called /products");
         return productService.getProducts();
     }
 
