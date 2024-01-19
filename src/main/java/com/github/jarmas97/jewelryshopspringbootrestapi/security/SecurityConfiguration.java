@@ -38,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/home").permitAll()
                 .antMatchers(HttpMethod.GET, "/products/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/product/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
