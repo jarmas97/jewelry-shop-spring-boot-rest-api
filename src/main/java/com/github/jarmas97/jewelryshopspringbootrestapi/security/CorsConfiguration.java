@@ -10,7 +10,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
 //                .allowedOrigins("https://")                      //production
-                .allowedOrigins("http://localhost:3000")           //development
+                .allowedOrigins("*")           //development
                 .allowedMethods("*")
                 .allowedHeaders("*");
     }

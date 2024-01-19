@@ -1,6 +1,7 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.security.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,18 +54,9 @@ public class TokenProvider {
         boolean result = true;
         try {
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-            Date now = new Date();
-
-            if (claims.getExpiration() != null && now.after(claims.getExpiration())) {
-                System.out.println("token expired");
-                result = false;
-            }
-
-            if (claims.getIssuedAt() != null && now.before(claims.getIssuedAt())) {
-                System.out.println("date problem");
-                result = false;
-            }
-
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token expired");
+            result = false;
         } catch (Exception e) {
             e.printStackTrace();
             result = false;

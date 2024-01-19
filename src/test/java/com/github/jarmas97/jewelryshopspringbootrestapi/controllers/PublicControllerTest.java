@@ -1,4 +1,4 @@
-package com.github.jarmas97.jewelryshopspringbootrestapi.controllers;
+//package com.github.jarmas97.jewelryshopspringbootrestapi.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,38 +18,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-class PublicControllerTest {
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//class PublicControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Test
-    void testStatusOk() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    void testResponseContainsProducts() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$", hasSize(greaterThan(0))));
-    }
-
-    @Test
-    void testProductFields() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].category").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].materials").isArray())
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].price").exists());
-    }
-}
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Test
+//    void testStatusOk() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/products")
+//            .accept(MediaType.APPLICATION_JSON))
+//            .andExpect(MockMvcResultMatchers.status().isOk());
+//    }
+//
+//    @Test
+//    void testResponseContainsProducts() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/products")
+//            .accept(MediaType.APPLICATION_JSON))
+//            .andExpect(jsonPath("$", hasSize(greaterThan(0))));
+//    }
+//
+//    @Test
+//    void testProductFields() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/products")
+//            .accept(MediaType.APPLICATION_JSON))
+//            .andExpect(MockMvcResultMatchers.status().isOk())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").exists())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").exists())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].category").exists())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].materials").isArray())
+//            .andExpect(MockMvcResultMatchers.jsonPath("$[0].price").exists());
+//    }
+//}

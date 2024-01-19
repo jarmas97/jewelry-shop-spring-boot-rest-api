@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class PhotoDTO {
     private Long id;
-    private String photo;
-    private boolean isProfile;
+    private String data;
 }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import javax.persistence.*;
+
 @Data
 @Entity
 @Table(name = "MATERIALS")

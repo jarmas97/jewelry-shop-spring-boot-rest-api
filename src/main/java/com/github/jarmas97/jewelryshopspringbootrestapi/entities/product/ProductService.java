@@ -1,13 +1,18 @@
 package com.github.jarmas97.jewelryshopspringbootrestapi.entities.product;
 
+import com.github.jarmas97.jewelryshopspringbootrestapi.entities.material.Material;
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.material.MaterialRepository;
+import com.github.jarmas97.jewelryshopspringbootrestapi.entities.photo.Photo;
+import com.github.jarmas97.jewelryshopspringbootrestapi.entities.photo.PhotoDTO;
 import com.github.jarmas97.jewelryshopspringbootrestapi.entities.photo.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,63 +23,60 @@ public class ProductService {
     private MaterialRepository materialRepository;
     @Autowired
     private PhotoRepository photoRepository;
-    public Iterable<Product> findAll() {
+    public Iterable<Product> getProducts() {
         return productRepository.findAll();
     }
-    //    @Transactional
-    public ResponseEntity<String> addProduct(@RequestBody ProductRequest productRequest) {
+    @Transactional
+    public ResponseEntity<String> addProduct(ProductDTO productDTO) {
 
-        System.out.println(productRequest);
+        Product newProduct = new Product();
+        newProduct.setName(productDTO.getName());
+        newProduct.setDescription(productDTO.getDescription());
+        newProduct.setCategory(Category.valueOf(productDTO.getCategory()));
+        newProduct.setMaterials(new ArrayList<>());
 
-//        Product newProduct = new Product();
-//        newProduct.setName(name);
-//        newProduct.setDescription(description);
-//        newProduct.setCategory(Category.valueOf(category));
-//        newProduct.setMaterials(new ArrayList<>());
-//
-//        for (Long materialId : materialIds) {
-//            Optional<Material> materialOptional = materialRepository.findById(materialId);
-//            materialOptional.ifPresent(newProduct.getMaterials()::add);
-//        }
-//        newProduct.setPrice(price);
-//        List<Photo> photoList = new ArrayList<>();
-//
-//        for (PhotoDTO photoDTO : photos) {
-//            if (photoDTO.isProfile()) {
-//                Photo profilePhoto = new Photo();
-//                profilePhoto.setPhoto(photoDTO.getPhoto());
-//                photoRepository.save(profilePhoto);
-//                newProduct.setProfilePhoto(profilePhoto);
-//            } else {
-//                Photo photo = new Photo();
-//                photo.setPhoto(photoDTO.getPhoto());
-//                photoRepository.save(photo);
-//                photoList.add(photo);
-//            }
-//        }
-//
-//        newProduct.setPhotos(photoList);
-//
-//        productRepository.save(newProduct);
+        for (Long materialId : productDTO.getMaterialsIDs()) {
+            Optional<Material> materialOptional = materialRepository.findById(materialId);
+            materialOptional.ifPresent(newProduct.getMaterials()::add);
+        }
+        newProduct.setPrice(productDTO.getPrice());
+        List<PhotoDTO> photoDTOList = productDTO.getPhotos();
+        List<Photo> photoList = new ArrayList<>();
+
+        for (int i = 0; i < photoDTOList.size(); i++) {
+            Photo photo = new Photo();
+            photo.setData(photoDTOList.get(i).getData());
+            photoRepository.save(photo);
+            photoList.add(photo);
+            if (i == productDTO.getProfilePhotoIndex()) {
+                newProduct.setProfilePhoto(photo);
+            }
+        }
+        newProduct.setPhotos(photoList);
+        newProduct.setSize(productDTO.getSize());
+        newProduct.setAvailableStock(productDTO.getAvailableStock());
+        productRepository.save(newProduct);
 
         return ResponseEntity.ok("Product added successfully");
     }
 
-    public ResponseEntity<String> removeProduct(Long productId) {
-        Optional<Product> productOptional = productRepository.findById(productId);
+    @Transactional
+    public ResponseEntity<String> changeProduct(ProductDTO productDTO) {
+        removeProduct(productDTO.getId());
+        addProduct(productDTO);
+        return ResponseEntity.ok("Product changed successfully");
+    }
+
+    @Transactional
+    public ResponseEntity<String> removeProduct(Long productID) {
+        Optional<Product> productOptional = productRepository.findById(productID);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-
-            // removing connected materials and photos
-            product.setMaterials(null);
-            product.setPhotos(null);
-            // removing product
-            System.out.println("removing product = " + productId);
+            for (Photo photo : product.getPhotos()) {
+                photoRepository.deleteById(photo.getId());
+            }
             productRepository.delete(product);
-
-            return new ResponseEntity<>("Product successfully removed", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
+        return ResponseEntity.ok("Product deleted successfully");
     }
 }

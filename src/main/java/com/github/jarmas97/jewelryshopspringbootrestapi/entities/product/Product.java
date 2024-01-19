@@ -29,15 +29,16 @@ public class Product {
             name = "product_material",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "material_id"))
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Material> materials;
     private BigDecimal price;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_photo_id")
-    private Photo profilePhoto;
     @ElementCollection
     @CollectionTable(name = "product_photos", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "photo")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "profile_photo_id")
+    private Photo profilePhoto;
+    private int size;
+    private int availableStock;
 }
