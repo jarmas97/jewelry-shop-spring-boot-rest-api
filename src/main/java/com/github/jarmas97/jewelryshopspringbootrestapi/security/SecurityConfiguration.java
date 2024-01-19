@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
                 .antMatchers(HttpMethod.GET, "/home").permitAll()
                 .antMatchers(HttpMethod.GET, "/products/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/product/**").permitAll()
