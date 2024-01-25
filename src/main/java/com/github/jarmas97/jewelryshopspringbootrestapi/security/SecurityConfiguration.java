@@ -38,15 +38,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and().authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/").permitAll()
-//                .antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
-//                .antMatchers(HttpMethod.GET, "/home").permitAll()
-//                .antMatchers(HttpMethod.GET, "/products/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/product/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/login").permitAll()
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/h2-console/**").permitAll() // for development
-//                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.GET, "/products/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/product/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/h2-console/**").permitAll() // for development
+                .anyRequest().authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
