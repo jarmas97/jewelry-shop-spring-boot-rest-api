@@ -1,0 +1,11 @@
+version: 1
+services:
+  - name: spring-boot-app
+    source: .
+    runtime: java8
+    buildCommand: mvn clean install
+    startCommand: java -jar target/jewelry-shop-spring-boot-rest-api-0.0.1-SNAPSHOT.jar
+    environmentVariables:
+      SPRING_PROFILES_ACTIVE: production
+    instanceConfiguration:
+      instanceConcurrency: 1
